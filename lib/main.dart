@@ -16,13 +16,13 @@ class Calculator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 8),
+            margin: const EdgeInsets.only(top: 50),
             child: Text(
               label,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 30,
                 fontWeight: FontWeight.w400,
-                color: Color.fromARGB(1, 0, 0, 0),
+                color: Color.fromARGB(100, 0, 0, 0),
               ),
             ),
           ),
@@ -30,13 +30,61 @@ class Calculator extends StatelessWidget {
       );
     }
 
-    Widget buttonSection = Container (
-      child: Row(
+    Row _buildButtonRow (String btn1, String btn2, String btn3) {
+      return Row (
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildNormalButton("0"),
-          _buildNormalButton("."),
-          _buildNormalButton("="),
+          _buildNormalButton(btn1),
+          _buildNormalButton(btn2),
+          _buildNormalButton(btn3),
+        ],
+      );
+    }
+
+    Widget buttonSection = Container (
+      child: Column(
+        children: <Widget>[
+          _buildButtonRow("A", "B+", "B"),
+          _buildButtonRow("C+", "C", "D"),
+          _buildButtonRow("F/FD", "clr", "=")
+        ],
+      ),
+    );
+
+    Text _resultText (String text){
+      return Text (
+        text,
+        style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(100, 0, 0, 0),
+              ),
+      );
+    }
+
+    Text _equationText (String text){
+      return Text (
+        text,
+        style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(100, 0, 0, 0),
+              ),
+      );
+    }
+
+    Widget resultSection = Container (
+      child: Row(
+        children: <Widget>[
+          _resultText("Result"),
+        ],
+      ),
+    );
+
+    Widget equationSection = Container (
+      child: Row(
+        children: <Widget>[
+          _equationText("Equation"),
         ],
       ),
     );
@@ -44,11 +92,10 @@ class Calculator extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter QPI',
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Flutter QPI'),
-        ),
         body: ListView(
           children: [
+            equationSection,
+            resultSection,
             buttonSection,
           ],
         ),
