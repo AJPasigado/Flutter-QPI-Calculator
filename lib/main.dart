@@ -30,7 +30,7 @@ class Calculator extends StatelessWidget {
       );
     }
 
-    Widget buttonSection = Container(
+    Widget buttonSection = Container (
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
