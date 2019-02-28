@@ -55,5 +55,18 @@ class Calculator extends StatelessWidget {
       ),
     );
   }
+
+
+
+
+  List<String> buffer = [];
+  final gradeDict = const{'A':4,'B+':3.5,'B':3,'C+':2.5,"C":2,"D":1};
+  double returnQPI(List<String> grades){
+    int cumulative = 0;
+    grades.forEach((i) => cumulative += gradeDict[i]);
+    return (cumulative / grades.length);
+  }
+
+
 }
 
