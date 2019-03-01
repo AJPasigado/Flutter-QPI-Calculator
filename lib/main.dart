@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -29,35 +30,50 @@ class Calculator extends State<MainCalc> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.white,
+      statusBarColor: Color.fromARGB(200, 109, 180, 194),
+    ));
+
     double returnQPI(List<String> grades) {
       double cumulative = 0;
       grades.forEach((i) => cumulative += gradeDict[i]);
       return (cumulative / grades.length);
     }
 
-    RaisedButton grade_button(String text) {
-      return RaisedButton(
-        child: Text(text),
-        color: Colors.white,
+    RawMaterialButton grade_button(String text) {
+      return RawMaterialButton(
+        shape: new CircleBorder(),
+        padding: EdgeInsets.all(45),
+        child: Text(
+          text,
+          style: new TextStyle(fontSize: 20, color: Colors.white),
+        ),
         elevation: 0,
-        splashColor: Colors.blueGrey,
+        splashColor: Colors.blueGrey[100],
         onPressed: () {
           buffer.add(text);
           txt_controller_equation.value = new TextEditingController.fromValue(
                   new TextEditingValue(
-                      text: txt_controller_equation.value.text + " " + text))
+                      text: txt_controller_equation.value.text == ""
+                          ? text
+                          : txt_controller_equation.value.text + ",  " + text))
               .value;
           print(buffer);
         },
       );
     }
 
-    RaisedButton _buildNormalButton(String label) {
-      return RaisedButton(
-        child: Text(label),
-        color: Theme.of(context).accentColor,
+    RawMaterialButton _buildNormalButton(String label) {
+      return RawMaterialButton(
+        shape: new CircleBorder(),
+        padding: EdgeInsets.all(45),
+        child: Text(
+          label,
+          style: new TextStyle(fontSize: 20, color: Colors.white),
+        ),
         elevation: 0,
-        splashColor: Colors.blueGrey,
+        splashColor: Colors.blueGrey[100],
         onPressed: () {
           buffer.clear();
           txt_controller_equation.value = new TextEditingValue();
@@ -66,12 +82,17 @@ class Calculator extends State<MainCalc> {
       );
     }
 
-    RaisedButton equal_button() {
-      return RaisedButton(
-        child: Text("="),
-        color: Theme.of(context).accentColor,
-        elevation: 0,
-        splashColor: Colors.blueGrey,
+    RawMaterialButton equal_button() {
+      return RawMaterialButton(
+        shape: new CircleBorder(),
+        padding: EdgeInsets.all(45),
+        fillColor: Color.fromARGB(200, 109, 151, 234),
+        child: Text(
+          "=",
+          style: new TextStyle(fontSize: 20, color: Colors.white),
+        ),
+        elevation: 4,
+        splashColor: Colors.blueGrey[100],
         onPressed: () {
           var qpi = returnQPI(buffer);
           print(qpi);
@@ -81,7 +102,7 @@ class Calculator extends State<MainCalc> {
               .value;
           txt_controller_result
             ..value = new TextEditingController.fromValue(
-                    new TextEditingValue(text: qpi.toString()))
+                    new TextEditingValue(text: qpi.toStringAsFixed(2)))
                 .value;
         },
       );
@@ -89,7 +110,7 @@ class Calculator extends State<MainCalc> {
 
     Row _buildButtonRow(btn1, btn2, btn3) {
       return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           btn1,
           btn2,
@@ -100,52 +121,85 @@ class Calculator extends State<MainCalc> {
 
     return MaterialApp(
       title: 'Flutter QPI',
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: ListView(
-          children: [
-            Container(
-              height: 100,
-              padding: EdgeInsets.all(20),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 260,
-                    child: new TextField(
-                      controller: txt_controller_equation,
-                      //style: TextStyle(fontSize: 32.0, color: Colors.black),
+        body: Container(
+          decoration: BoxDecoration(
+            // Box decoration takes a gradient
+            gradient: LinearGradient(
+              // Where the linear gradient begins and ends
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0, 1],
+              colors: [
+                Color.fromARGB(200, 109, 180, 194),
+                Color.fromARGB(200, 109, 151, 234),
+              ],
+            ),
+          ),
+          child: ListView(
+            children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      height: 190,
+                      width: 380,
+                      child: new TextField(
+                        keyboardType: TextInputType.multiline,
+                        decoration:
+                            new InputDecoration(border: InputBorder.none),
+                        textAlign: TextAlign.right,
+                        enabled: false,
+                        maxLines: null,
+                        controller: txt_controller_equation,
+                        style: TextStyle(fontSize: 30.0, color: Colors.white),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      height: 100,
+                      width: 380,
+                      child: new TextField(
+                        decoration: new InputDecoration(
+                            hintText:
+                                "Start adding grades by tapping the buttons",
+                            hintStyle:
+                                TextStyle(fontSize: 20, color: Colors.white70)),
+                        textAlign: TextAlign.right,
+                        enabled: false,
+                        controller: txt_controller_result,
+                        style: TextStyle(
+                            fontSize: 60.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(20),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 260,
-                    child: new TextField(controller: txt_controller_result
-                        //style: TextStyle(fontSize: 32.0, color: Colors.black),
-                        ),
-                  ),
-                ],
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    _buildButtonRow(grade_button("A"), grade_button("B+"),
+                        grade_button("B")),
+                    _buildButtonRow(grade_button("C+"), grade_button("C"),
+                        grade_button("D")),
+                    _buildButtonRow(grade_button("F/FD"),
+                        _buildNormalButton("clr"), equal_button()),
+                  ],
+                ),
               ),
-            ),
-            // THis is the spacing between the buttonsand the display.
-            Container(height: 130),
-            Container(
-              child: Column(
-                children: <Widget>[
-                  _buildButtonRow(
-                      grade_button("A"), grade_button("B+"), grade_button("B")),
-                  _buildButtonRow(
-                      grade_button("C+"), grade_button("C"), grade_button("D")),
-                  _buildButtonRow(grade_button("F/FD"),
-                      _buildNormalButton("clr"), equal_button()),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
