@@ -45,7 +45,9 @@ class Calculator extends State<MainCalc> {
       "D": 1,
       "F/FD": 0
     };
-    var txt_controller_equation = new TextEditingController();
+    //var txt_controller_equation = new TextEditingController();
+    final txt_controller_equation = TextEditingController();
+    final txt_controller_result = TextEditingController();
 
     double returnQPI(List<String> grades) {
       double cumulative = 0;
@@ -68,6 +70,9 @@ class Calculator extends State<MainCalc> {
       return GestureDetector(
         onTap: () {
           buffer.add(text);
+          txt_controller_equation.value = new TextEditingController.fromValue(
+                  new TextEditingValue(text: txt_controller_equation.value.text +" . "+ text)).value;
+          //txt_controller_equation.text="AAA";
           //_equationText();
           print(buffer);
           //new RaisedButton(onPressed: () {
@@ -88,6 +93,10 @@ class Calculator extends State<MainCalc> {
           var qpi = returnQPI(buffer);
           print(qpi);
           buffer.clear();
+          txt_controller_equation.value = new TextEditingController.fromValue(
+                  new TextEditingValue(text: '')).value;
+          txt_controller_result..value = new TextEditingController.fromValue(
+                  new TextEditingValue(text: qpi.toString())).value;
         },
         child: Text(
           "=",
@@ -112,9 +121,11 @@ class Calculator extends State<MainCalc> {
                       color: Color.fromARGB(100, 0, 0, 0),
                     ),
                   ),
-                  //new TextField(
-                  //  controller: txt_controller_equation,
-                  //),
+                  Container(width: 500 ,child:new TextField(
+                    controller: txt_controller_equation,
+                    //style: TextStyle(fontSize: 32.0, color: Colors.black),
+                  ),)
+                  
                 ],
               ),
             ),
@@ -129,6 +140,11 @@ class Calculator extends State<MainCalc> {
                       color: Color.fromARGB(100, 0, 0, 0),
                     ),
                   ),
+                  Container(width: 500 ,child:new TextField(
+                    controller: txt_controller_result
+                    //style: TextStyle(fontSize: 32.0, color: Colors.black),
+                  ),
+                ),
                 ],
               ),
             ),
