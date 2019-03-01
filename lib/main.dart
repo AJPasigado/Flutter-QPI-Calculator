@@ -12,6 +12,10 @@ class MainCalc extends StatefulWidget {
 }
 
 class Calculator extends State<MainCalc> {
+
+
+
+
   @override
   Widget build(BuildContext context) {
     Column _buildNormalButton(String label) {
@@ -48,6 +52,13 @@ class Calculator extends State<MainCalc> {
     //var txt_controller_equation = new TextEditingController();
     final txt_controller_equation = TextEditingController();
     final txt_controller_result = TextEditingController();
+
+    TextField txtfld_result () { 
+      return TextField(
+        controller: txt_controller_result,
+        style: TextStyle(fontSize: 32.0, color: Colors.black),
+      );
+    }
 
     double returnQPI(List<String> grades) {
       double cumulative = 0;
@@ -144,6 +155,8 @@ class Calculator extends State<MainCalc> {
                     ),
                   ),
                   Container(width: 260 ,child:new TextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
                     controller: txt_controller_equation,
                     //style: TextStyle(fontSize: 32.0, color: Colors.black),
                   ),)
@@ -162,10 +175,12 @@ class Calculator extends State<MainCalc> {
                       color: Color.fromARGB(100, 0, 0, 0),
                     ),
                   ),
-                  Container(width: 260 ,child:new TextField(
-                    controller: txt_controller_result
-                    //style: TextStyle(fontSize: 32.0, color: Colors.black),
-                  ),
+                  Container(
+                    width: 260 , 
+                    child: TextField(
+                      controller: txt_controller_result,
+                      style: TextStyle(fontSize: 32.0, color: Colors.black),
+                    ), 
                 ),
                 ],
               ),
