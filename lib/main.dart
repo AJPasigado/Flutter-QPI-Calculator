@@ -18,7 +18,7 @@ class Calculator extends State<MainCalc> {
       return Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: [ 
           Container(
             margin: const EdgeInsets.only(top: 50),
             child: Text(
@@ -75,10 +75,24 @@ class Calculator extends State<MainCalc> {
           //  }
           // );
         },
-        child: Text(
+        child: 
+          Container(
+            margin: const EdgeInsets.only(top: 50),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w400,
+                color: Color.fromARGB(100, 0, 0, 0),
+              ),
+              ),
+          ),
+
+        
+        /*Text(
           text,
           style: TextStyle(fontSize: 32.0, color: Colors.black),
-        ),
+        ),*/
       );
     }
 
