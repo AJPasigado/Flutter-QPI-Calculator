@@ -112,10 +112,17 @@ class Calculator extends State<MainCalc> {
           txt_controller_result..value = new TextEditingController.fromValue(
                   new TextEditingValue(text: qpi.toString())).value;
         },
-        child: Text(
-          "=",
-          style: TextStyle(fontSize: 32.0, color: Colors.black),
-        ),
+        child: Container(
+            margin: const EdgeInsets.only(top: 50),
+            child: Text(
+              "=",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w400,
+                color: Color.fromARGB(100, 0, 0, 0),
+              ),
+              ),
+          ),
       );
     }
 
@@ -124,7 +131,8 @@ class Calculator extends State<MainCalc> {
       home: Scaffold(
         body: ListView(
           children: [
-            Container(
+            Container(height:100, padding:EdgeInsets.all(20),
+
               child: Row(
                 children: <Widget>[
                   new Text(
@@ -135,7 +143,7 @@ class Calculator extends State<MainCalc> {
                       color: Color.fromARGB(100, 0, 0, 0),
                     ),
                   ),
-                  Container(width: 500 ,child:new TextField(
+                  Container(width: 260 ,child:new TextField(
                     controller: txt_controller_equation,
                     //style: TextStyle(fontSize: 32.0, color: Colors.black),
                   ),)
@@ -143,7 +151,7 @@ class Calculator extends State<MainCalc> {
                 ],
               ),
             ),
-            Container(
+            Container(padding:EdgeInsets.all(20),
               child: Row(
                 children: <Widget>[
                   Text(
@@ -154,7 +162,7 @@ class Calculator extends State<MainCalc> {
                       color: Color.fromARGB(100, 0, 0, 0),
                     ),
                   ),
-                  Container(width: 500 ,child:new TextField(
+                  Container(width: 260 ,child:new TextField(
                     controller: txt_controller_result
                     //style: TextStyle(fontSize: 32.0, color: Colors.black),
                   ),
@@ -162,6 +170,8 @@ class Calculator extends State<MainCalc> {
                 ],
               ),
             ),
+            // THis is the spacing between the buttonsand the display.
+            Container(height:130), 
             Container(
               child: Column(
                 children: <Widget>[
