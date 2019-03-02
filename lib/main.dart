@@ -55,10 +55,13 @@ class Calculator extends State<MainCalc> {
           buffer.add(text);
           txt_controller_equation.value = new TextEditingController.fromValue(
                   new TextEditingValue(
-                      text: txt_controller_equation.value.text == ""
+                      text: buffer.length == 1
                           ? text
                           : txt_controller_equation.value.text + ",  " + text))
               .value;
+          if (buffer.length == 1) {
+            txt_controller_result.value = new TextEditingValue();
+          }
           print(buffer);
         },
       );
@@ -97,9 +100,6 @@ class Calculator extends State<MainCalc> {
           var qpi = returnQPI(buffer);
           print(qpi);
           buffer.clear();
-          txt_controller_equation.value = new TextEditingController.fromValue(
-                  new TextEditingValue(text: ''))
-              .value;
           txt_controller_result
             ..value = new TextEditingController.fromValue(
                     new TextEditingValue(text: qpi.toStringAsFixed(2)))
@@ -149,7 +149,7 @@ class Calculator extends State<MainCalc> {
                       child: new TextField(
                         keyboardType: TextInputType.multiline,
                         decoration:
-                            new InputDecoration(border: InputBorder.none),
+                            new InputDecoration(border: InputBorder.none, isDense: false, enabled: false),
                         textAlign: TextAlign.right,
                         enabled: false,
                         maxLines: null,
